@@ -1,0 +1,54 @@
+This document provides purchase links to JTAG debuggers which:
+- are affordable for hobbyists,
+- can be used with RISC-V chips,
+- are supported by OpenOCD.
+
+J-Link clones (v11/v12)
+
+https://www.aliexpress.com/item/1005005279091850.html
+https://www.aliexpress.com/item/1005005617962721.html
+https://www.aliexpress.com/item/32857220686.html
+https://www.aliexpress.com/item/32869644885.html
+https://www.aliexpress.com/item/1005005303267820.html
+https://www.aliexpress.com/item/1005003133939923.html
+https://www.aliexpress.com/item/1005005241901492.html
+https://www.aliexpress.com/item/1005004471916630.html
+https://www.aliexpress.com/item/1005005510494129.html
+https://www.aliexpress.com/item/1005005894219907.html
+
+FT2232HL
+
+https://www.aliexpress.com/item/32975940318.html
+https://www.aliexpress.com/item/32944486685.html
+https://www.aliexpress.com/item/1005003541869458.html
+https://www.aliexpress.com/item/1005005710273495.html
+https://www.aliexpress.com/item/33038060359.html
+https://www.aliexpress.com/item/1005005757974747.html
+https://www.aliexpress.com/item/4001278638301.html
+
+FT4232HL
+
+https://www.aliexpress.com/item/32975940318.html
+https://www.aliexpress.com/item/4001278599348.html
+
+FT2232D USB dongles
+
+https://www.aliexpress.com/item/1005005356931097.html
+https://www.aliexpress.com/item/4000987052666.html
+https://www.aliexpress.com/item/4000252520918.html
+https://www.aliexpress.com/item/1005002714665888.html
+https://www.aliexpress.com/item/1005002709506584.html
+
+BL702 USB dongles (FT2232 emulation)
+
+https://www.aliexpress.com/item/1005002935660746.html
+https://www.aliexpress.com/item/1005002837417966.html
+https://www.aliexpress.com/item/1005005349921473.html
+
+CH552T USB dongles (FT2232 emulation)
+
+https://www.aliexpress.com/item/1005002105074475.html
+https://www.aliexpress.com/item/1005005955727980.html
+https://www.aliexpress.com/item/1005002715166088.html
+https://www.aliexpress.com/item/1005005958635961.html
+https://www.aliexpress.com/item/1005005955275482.html
