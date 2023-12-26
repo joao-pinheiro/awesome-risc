@@ -79,19 +79,8 @@ fi
 runMode='help'
 
 case "$1" in
-dry-run)
-    runMode='dry-run'
-    ;;
-
-list)
-    runMode='list'
-    ;;
-
-update)
-    runMode='update'
-    ;;
-riscv)
-    runMode='RISC-V'
+dry-run | list | update | riscv)
+    runMode=$1
     ;;
 esac
 
@@ -256,8 +245,9 @@ updateDocuments() {
     done
 }
 
-printFile() {
+printUpdatedFile() {
     local newFileRecord="$1"
+    local docType="$2"
     
     local newFileDate="$(echo "${newFileRecord}" | cut -d , -f 1)"
     local pageUrl="$(echo "${newFileRecord}" | cut -d , -f 3)"
@@ -265,15 +255,37 @@ printFile() {
     local baseName="$(echo "${pageUrl}" | sed 's/.*\/\([^/]*\)_.*\.html/\1/')"
     local suffix="$(echo "${pageUrl}" | sed 's/.*\/[^/]*_\(.*\)\.html/\1/' | tr '[:upper:]' '[:lower:]')"
     
-    if [ "${suffix}" = 'pdf' ]; then
-        case "${baseName}" in
-        PACKAGE | PRODUCT_GUIDE | CH32V20x_30xDS0 | *_Manual | *RM)
+    if [ "${suffix}" = "${docType}" ]; then
+        case "${docType}" in
+        pdf)
+            case "${baseName}" in
+            CH32V20x_30xDS0)
+                ;;
+            *DS0 | *DS1 | *RM)
+                echo "${newFileDate},${baseName}"
+                ;;
+            esac
             ;;
-        *)
-            echo "${newFileDate},${baseName}"
+        zip)
+            case "${baseName}" in
+            *EVT)
+                echo "${newFileDate},${baseName}"
+            esac
             ;;
         esac
     fi
+}
+
+listUpdatedFiles() {
+	local keyword="$1"
+	
+	listFiles 'en' "${keyword}" | while IFS="\n" read record; do
+        printUpdatedFile "${record}" 'pdf'
+    done
+	
+	listFiles 'cn' "${keyword}" | while IFS="\n" read record; do
+        printUpdatedFile "${record}" 'zip'
+    done
 }
 
 # === TODO customise to your liking ====================================
@@ -296,10 +308,8 @@ blacklist="${blacklist}|CH32V20x_30xDS0.pdf|"
 riscvBlacklist="${blacklist}|CH32F20xDS0.pdf|"
 
 case "${runMode}" in
-'RISC-V')
-    listFiles 'cn' "${runMode}" | while IFS="\n" read record; do
-        printFile "${record}"
-    done | sort -r
+riscv)
+    listUpdatedFiles 'RISC-V' | sort -r
     ;;
 *)
     # This is the directory under which all documents must be downloaded.
