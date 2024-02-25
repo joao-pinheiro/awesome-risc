@@ -79,7 +79,7 @@ fi
 runMode='help'
 
 case "$1" in
-dry-run | list | update | riscv)
+dry-run | list | update | riscv | tools)
     runMode=$1
     ;;
 esac
@@ -100,6 +100,8 @@ available online, both from http://wch-ic.com and http.//www.wch.cn.
 
 - riscv: lists all documents about RISC-V MCU. Useful to spot new MCU
 as they become available.
+
+- tools: lists programming tools, used to check for updates.
 
 - help: displays this message.
 EOF
@@ -270,6 +272,7 @@ printUpdatedFile() {
             case "${baseName}" in
             *EVT)
                 echo "${newFileDate},${baseName}"
+                ;;
             esac
             ;;
         esac
@@ -286,6 +289,23 @@ listUpdatedFiles() {
 	listFiles 'cn' "${keyword}" | while IFS="\n" read record; do
         printUpdatedFile "${record}" 'zip'
     done
+}
+
+printTool() {
+	local pageUrl="$1"
+    
+    local baseName="$(echo "${pageUrl}" | sed 's/.*\/\([^/]*\)_.*\.html/\1/')"
+    local suffix="$(echo "${pageUrl}" | sed 's/.*\/[^/]*_\(.*\)\.html/\1/' | tr '[:upper:]' '[:lower:]')"
+    
+    wget -q -O - "${pageUrl}" | \
+        tidy --quiet yes --show-errors 0 --force-output yes --show-warnings no --quote-ampersand yes --numeric-entities yes --output-xml yes | \
+        xml sel --text -t -m "//tr[@class='table-download-content']" -v "td[position()=3]" -v "',${baseName}.${suffix},'" -v "td[position()=2]" -v "',${pageUrl}'" -n
+}
+
+listUpdatedTools() {
+	printTool 'https://www.wch.cn/downloads/WCH-LinkUtility_ZIP.html'
+	printTool 'https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html'
+	printTool 'https://www.wch.cn/downloads/WCHISPTool_CMD_ZIP.html'
 }
 
 # === TODO customise to your liking ====================================
@@ -310,6 +330,9 @@ riscvBlacklist="${blacklist}|CH32F20xDS0.pdf|"
 case "${runMode}" in
 riscv)
     listUpdatedFiles 'RISC-V' | sort -r
+    ;;
+tools)
+    listUpdatedTools | sort -r
     ;;
 *)
     # This is the directory under which all documents must be downloaded.
