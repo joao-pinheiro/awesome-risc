@@ -123,7 +123,7 @@ listFiles() {
     
     wget -q -O - ${searchUrl} | \
         tidy --quiet yes --show-errors 0 --force-output yes --show-warnings no --quote-ampersand yes --numeric-entities yes --output-xml yes | \
-        xml sel --text -t -m "//tr[@class='search-downloads-tr-body']" -i "count(td)= 4" -v "td[position()=4]" -v "',${language},'" -v "td[position()=1]/a/@href" -n
+        xmlstarlet sel --text -t -m "//tr[@class='search-downloads-tr-body']" -i "count(td)= 4" -v "td[position()=4]" -v "',${language},'" -v "td[position()=1]/a/@href" -n
 }
 
 compareDates() {
@@ -206,7 +206,7 @@ downloadFile() {
             echo "Updating ${destDir}/${destFile}" 1>&2
             fileUrl="$(wget -q -O - ${pageUrl} | \
                 tidy --quiet yes --show-errors 0 --force-output yes --show-warnings no --quote-ampersand yes --numeric-entities yes --output-xml yes | \
-                xml sel --text -t -m "//a[contains(@class,'btn-wch-download')]" -v "@href")"
+                xmlstarlet sel --text -t -m "//a[contains(@class,'btn-wch-download')]" -v "@href")"
             
             if [ -n "${fileUrl}" ]; then
                 wget -q -O "${localFile}" "${fileUrl}"
@@ -299,7 +299,7 @@ printTool() {
     
     wget -q -O - "${pageUrl}" | \
         tidy --quiet yes --show-errors 0 --force-output yes --show-warnings no --quote-ampersand yes --numeric-entities yes --output-xml yes | \
-        xml sel --text -t -m "//tr[@class='table-download-content']" -v "td[position()=3]" -v "',${baseName}.${suffix},'" -v "td[position()=2]" -v "',${pageUrl}'" -n
+        xmlstarlet sel --text -t -m "//tr[@class='table-download-content']" -v "td[position()=3]" -v "',${baseName}.${suffix},'" -v "td[position()=2]" -v "',${pageUrl}'" -n
 }
 
 listUpdatedTools() {
