@@ -1,0 +1,4 @@
+This directory contains configuration files for use with WCHISPTool_CMD. 
+They have been generated using WCHISPTool and the default options for 
+each micro-controller. They are intended for Linux users, so they can 
+avoid the burden of struggling with Wine to execute WCHISPTool.
